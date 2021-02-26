@@ -58,6 +58,29 @@ defmodule Rumbl.VideoControllerTest do
     assert video_count(Video) == count_before
   end
 
+  @tag login_as: "max"
+  test "authorizes actions against access by other users", %{user: owner, conn: conn} do
+    video = insert_video(owner, @valid_attrs)
+    non_owner = insert_user(username: "sneaky")
+    conn = assign(conn, :current_user, non_owner)
+
+    assert_error_sent :not_found, fn ->
+      get(conn, Routes.video_path(conn, :show, video))
+    end
+
+    assert_error_sent :not_found, fn ->
+      get(conn, Routes.video_path(conn, :edit, video))
+    end
+
+    assert_error_sent :not_found, fn ->
+      get(conn, Routes.video_path(conn, :update, video))
+    end
+
+    assert_error_sent :not_found, fn ->
+      get(conn, Routes.video_path(conn, :delete, video))
+    end
+  end
+
   defp video_count(query) do
     Repo.one(from v in query, select: count(v.id))
   end
