@@ -20,12 +20,14 @@ defmodule RumblWeb.ConnCase do
   using do
     quote do
       # Import conveniences for testing with connections
+      import Ecto.Query
       import Plug.Conn
       import Phoenix.ConnTest
       import RumblWeb.ConnCase
       import Rumbl.TestHelpers
 
       alias RumblWeb.Router.Helpers, as: Routes
+      alias Rumbl.Repo
 
       # The default endpoint for testing
       @endpoint RumblWeb.Endpoint
