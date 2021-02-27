@@ -1,7 +1,6 @@
 defmodule Rumbl.Auth do
   import Plug.Conn
-  import Bcrypt, only: [verify_pass: 2]
-  import Comeonin.Bcrypt, only: [dummy_checkpw: 0]
+  import Bcrypt, only: [verify_pass: 2, no_user_verify: 0]
   import Phoenix.Controller
   alias RumblWeb.Router.Helpers
 
@@ -49,7 +48,7 @@ defmodule Rumbl.Auth do
         {:error, :unauthorized, conn}
 
       true ->
-        dummy_checkpw()
+        no_user_verify()
         {:error, :not_found, conn}
     end
   end
