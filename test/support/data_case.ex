@@ -22,7 +22,8 @@ defmodule Rumbl.DataCase do
 
       import Ecto
       import Ecto.Changeset
-      import Ecto.Query
+      import Ecto.Query, only: [from: 1, from: 2]
+      import Rumbl.TestHelpers
       import Rumbl.DataCase
     end
   end
@@ -51,5 +52,13 @@ defmodule Rumbl.DataCase do
         opts |> Keyword.get(String.to_existing_atom(key), key) |> to_string()
       end)
     end)
+  end
+
+  def contains_error?(changeset, expected_error) do
+    errors_set = changeset
+      |> errors_on
+      |> MapSet.new
+    expected_error_set = MapSet.new(expected_error)
+    MapSet.subset?(expected_error_set, errors_set)
   end
 end
