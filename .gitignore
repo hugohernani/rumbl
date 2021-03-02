@@ -36,4 +36,4 @@ npm-debug.log
 /priv/static/
 
 
-config/dev.exs
+config/dev.secret.exs

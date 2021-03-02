@@ -15,6 +15,7 @@ defmodule Rumbl.Application do
       {Phoenix.PubSub, name: Rumbl.PubSub},
       # Start the Endpoint (http/https)
       RumblWeb.Endpoint,
+      Rumbl.InfoSys.Supervisor,
       # Start a worker by calling: Rumbl.Worker.start_link(arg)
       # {Rumbl.Worker, arg}
     ]
